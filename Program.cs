@@ -4,6 +4,8 @@ using NetCoreSeguridadEmpleados.Data;
 using NetCoreSeguridadEmpleados.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultSignInScheme =
@@ -15,10 +17,13 @@ builder.Services.AddAuthentication(options =>
 }).AddCookie();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(
+    options => options.EnableEndpointRouting = false
+    ).AddSessionStateTempDataProvider();
 
 string connectionString = builder.Configuration.GetConnectionString("SqlHospital");
 builder.Services.AddTransient<RepositoryEmpleados>();
+
 builder.Services.AddDbContext<EmpleadosContext>
     (options => options.UseSqlServer(connectionString));
 
@@ -39,6 +44,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.UseMvc(routes =>
 {

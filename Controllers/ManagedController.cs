@@ -30,13 +30,25 @@ namespace NetCoreSeguridadEmpleados.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         ClaimTypes.Name, ClaimTypes.Role);
                 Claim claimName = new Claim(ClaimTypes.Name, emp.Apellido);
-                identity.AddClaim(claimName);
+                identity.AddClaim(claimName);                
+                Claim claimId = new Claim(ClaimTypes.NameIdentifier, emp.IdEmpleado.ToString());
+                identity.AddClaim(claimId);
+                Claim claimOficio =
+                    new Claim(ClaimTypes.Role, emp.Oficio);
+                identity.AddClaim(claimOficio);
+                Claim claimSalario = new Claim("Salario", emp.Salario.ToString());
+                identity.AddClaim(claimSalario);                
+                Claim claimDept = new Claim("Departamento", emp.Departamento.ToString());
+                identity.AddClaim(claimDept);
 
                 ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     userPrincipal);
-                return RedirectToAction("PerfilEmpleado", "Empleados");
+                string controller = TempData["controller"].ToString();
+                string action = TempData["action"].ToString();
+                return RedirectToAction(action, controller);
+                /*return RedirectToAction("PerfilEmpleado", "Empleados");*/
             }
             else
             {
@@ -51,6 +63,11 @@ namespace NetCoreSeguridadEmpleados.Controllers
                 );
             return RedirectToAction("Index", "Home");
 
+        }
+
+        public IActionResult ErrorAcceso()
+        {
+            return View();
         }
     }
 }

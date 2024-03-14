@@ -20,20 +20,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
-                        </li>                        
+                            <a class="nav-link text-dark" asp-controller="Empleados" asp-action="Index">Empleados</a>
+                        </li>                          
                         <li class="nav-item">
-                            <partial name="_MenuEmpleados" />
-                        </li>
+                            <a class="nav-link text-warning" asp-controller="Empleados" asp-action="Compis">Compis Layout</a>
+                        </li>    
+                        <partial name="_MenuEmpleados" />
                     </ul>
                 </div>
-            </div>
+            </div> 
         </nav>
     </header>
     <div class="container">
